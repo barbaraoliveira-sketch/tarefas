@@ -17,20 +17,18 @@ def main(pagina:ft.Page):
                          color= "#D31DE4")
 
     lista_tarefas = []
-
     
 
-    
+    def excluir_campo(campo_tarefa):
+            lista_tarefas.remove(campo_tarefa)
 
     def adicionar_tarefa():
-        novo_campo = Campo_tarefa(texto_tarefa = campo_incluir.value)
+        novo_campo = Campo_tarefa(texto_tarefa = campo_incluir.value,
+                                  funcao_excluir= excluir_campo)
         lista_tarefas.append(novo_campo)
         campo_incluir.value = ""
 
     
-
-
-        
 
     campo_incluir = ft.TextField(label = "Digite aqui:",
                                bgcolor = "#B300C4",
@@ -71,7 +69,7 @@ def main(pagina:ft.Page):
                        linha,
                        tarefas1,
                        
-                                         
+                                      
                        ]
 
     pagina.update()
