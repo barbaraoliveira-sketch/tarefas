@@ -1,23 +1,16 @@
 import flet as ft
 from component.classe_campo_tarefa import Campo_tarefa
 import sqlite3
+from database.creat_database import criar_banco_dados
+from model import model_tarefa
+
 
 def main(pagina:ft.Page):
     pagina.title = "Checklist"
     pagina.bgcolor = "#D094DF"
     pagina.horizontal_alignment = "center"
 
-    #Criando a tabels de tarefas no banco de dados sqlite3
-    conexao = sqlite3.connect("bd_tarefas.sqlite") #Conectando banco de dados
-    cursor = conexao.cursor() #Criando cursor
-    cursor.execute("""
-                        CREATE TABLE if NOT EXISTS tarefas (
-                        cod_tarefa INTEGER PRIMARY KEY AUTOINCREMENT,
-                        tarefa TEXT
-                        status TEXT);
-                        """)
-    conexao.commit() # Salvando alterações 
-    conexao.close() # Fechando conexão
+    criar_banco_dados()
 
     titulo = ft.Text(value="Checklist - Tudo em Dia",
                      size = 40,
@@ -30,12 +23,13 @@ def main(pagina:ft.Page):
                          color= "#D31DE4")
 
     lista_tarefas = []
-    
 
     def excluir_campo(campo_tarefa):
             lista_tarefas.remove(campo_tarefa)
 
     def adicionar_tarefa():
+        model_tarefa.inserir_tarefa(campo_incluir.value)
+
         novo_campo = Campo_tarefa(texto_tarefa = campo_incluir.value,
                                   funcao_excluir= excluir_campo)
         lista_tarefas.append(novo_campo)
