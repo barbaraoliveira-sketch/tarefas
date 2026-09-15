@@ -26,14 +26,23 @@ def main(pagina:ft.Page):
 
     def excluir_campo(campo_tarefa):
             lista_tarefas.remove(campo_tarefa)
-
+            
     def adicionar_tarefa():
         model_tarefa.inserir_tarefa(campo_incluir.value)
 
         novo_campo = Campo_tarefa(texto_tarefa = campo_incluir.value,
                                   funcao_excluir= excluir_campo)
         lista_tarefas.append(novo_campo)
+
         campo_incluir.value = ""
+
+         #recuperando as tarefas do banco de dados e montando os componentes
+    tarefas_vindas_do_bd = model_tarefa.recuperar_tarefas()
+    for tarefa in tarefas_vindas_do_bd:
+        novo_campo = Campo_tarefa(texto_tarefa=tarefa["tarefa"],
+                                funcao_excluir=excluir_campo)
+        
+        lista_tarefas.append(novo_campo) 
 
     
 

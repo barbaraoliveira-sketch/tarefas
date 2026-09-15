@@ -13,10 +13,12 @@ def inserir_tarefa(texto_tarefa):
     conexao.close()
 
 def recuperar_tarefas():
-    conexao, cursor = conectar_bd
+    conexao, cursor = conectar_bd()
 
     cursor.execute("""
-                        SELECT * FROM tarefas;""")
+                        SELECT cod_tarefa, status, tarefa FROM tarefas;""")
 
     tarefas = cursor.fetchall() #commit
     conexao.close()
+
+    return tarefas
