@@ -18,5 +18,5 @@ def recuperar_tarefas():
     cursor.execute("""
                         SELECT * FROM tarefas;""")
 
-    conexao.commit()
+    tarefas = cursor.fetchall() #commit
     conexao.close()
