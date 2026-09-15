@@ -1,10 +1,23 @@
 import flet as ft
 from component.classe_campo_tarefa import Campo_tarefa
+import sqlite3
 
 def main(pagina:ft.Page):
     pagina.title = "Checklist"
     pagina.bgcolor = "#D094DF"
     pagina.horizontal_alignment = "center"
+
+    #Criando a tabels de tarefas no banco de dados sqlite3
+    conexao = sqlite3.connect("bd_tarefas.sqlite") #Conectando banco de dados
+    cursor = conexao.cursor() #Criando cursor
+    cursor.execute("""
+                        CREATE TABLE if NOT EXISTS tarefas (
+                        cod_tarefa INTEGER PRIMARY KEY AUTOINCREMENT,
+                        tarefa TEXT
+                        status TEXT);
+                        """)
+    conexao.commit() # Salvando alterações 
+    conexao.close() # Fechando conexão
 
     titulo = ft.Text(value="Checklist - Tudo em Dia",
                      size = 40,
